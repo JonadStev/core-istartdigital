@@ -46,9 +46,12 @@ public class AuthController {
 
 
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevo(@RequestBody NuevoUsuario nuevoUsuario){
-        if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
-            return new ResponseEntity("El correo ya existe", HttpStatus.BAD_REQUEST);
+    public Map<String, String> nuevo(@RequestBody NuevoUsuario nuevoUsuario){
+        Map<String, String> map = new HashMap<>();
+        if(usuarioService.existsByEmail(nuevoUsuario.getEmail())){
+            map.put("message", "El correo electrónico ya existe.");
+            return map;
+        }
         Usuario usuario = new Usuario(
                 nuevoUsuario.getNombre(),
                 nuevoUsuario.getApellido(),
@@ -61,17 +64,18 @@ public class AuthController {
         if(nuevoUsuario.getRoles().contains("supervisor")){
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_SUPERVISOR).get());
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_MANTENIMIENTO).get());
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_BLOQUEO).get());
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_PRODUCCION).get());
         }else if (nuevoUsuario.getRoles().contains("mantenimiento")){
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_MANTENIMIENTO).get());
         }else {
             // bloqueo
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_BLOQUEO).get());
+            roles.add(rolService.getByRolNombre(RolNombre.ROLE_PRODUCCION).get());
         }
 
         usuario.setRoles(roles);
         usuarioService.save(usuario);
-        return new ResponseEntity("Usuario guardado", HttpStatus.CREATED);
+        map.put("message", "Usuario guardado correctamente.");
+        return map;
     }
 
     @PostMapping("/login")

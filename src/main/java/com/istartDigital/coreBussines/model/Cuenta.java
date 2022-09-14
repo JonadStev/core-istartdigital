@@ -1,6 +1,8 @@
 package com.istartDigital.coreBussines.model;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -87,8 +89,10 @@ public class Cuenta {
         this.modelo = modelo;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFecha() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = dateFormat.format(fecha);
+        return strDate;
     }
 
     public void setFecha(Date fecha) {

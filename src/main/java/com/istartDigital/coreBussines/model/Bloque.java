@@ -12,14 +12,17 @@ public class Bloque {
     private long id;
     private String nombre;
 
+    private String estado;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bloque")
     private List<Cuenta> cuentas;
 
     public Bloque() {
     }
 
-    public Bloque(String nombre) {
+    public Bloque(String nombre, String estado) {
         this.nombre = nombre;
+        this.estado = estado;
     }
 
     public long getId() {
@@ -44,5 +47,13 @@ public class Bloque {
 
     public void setCuentas(List<Cuenta> cuentas) {
         this.cuentas = cuentas;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 }

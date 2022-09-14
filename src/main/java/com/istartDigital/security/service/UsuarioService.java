@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,10 @@ public class UsuarioService {
 
     public Usuario udpateUser(Usuario usuario){
         return usuarioRepository.save(usuario);
+    }
+
+    public List<Usuario> getAllUser(){
+        return usuarioRepository.findAll();
     }
 
 }
