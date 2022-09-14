@@ -5,10 +5,7 @@ import com.istartDigital.security.model.Usuario;
 import com.istartDigital.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +23,12 @@ public class UsuarioController {
     public List<Usuario> getUsers() {
         return usuarioService.getAllUser();
     }
+
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    @PostMapping("/save")
+    public Usuario saveUser(@RequestBody Usuario usuario){
+        return usuarioService.save(usuario);
+    }
+
 
 }
