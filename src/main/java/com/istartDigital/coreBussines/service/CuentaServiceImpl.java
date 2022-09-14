@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,5 +49,10 @@ public class CuentaServiceImpl implements CuentaService{
     public List<Cuenta> getCuentasByIdBloque(long idBloque) {
         List<Cuenta> cuentas = this.getAllCuentas();
         return cuentas.stream().filter(x -> x.getBloque() == idBloque).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Cuenta> getCuentaById(long id) {
+        return cuentaRepository.findById(id);
     }
 }
