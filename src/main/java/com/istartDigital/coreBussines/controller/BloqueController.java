@@ -22,7 +22,7 @@ public class BloqueController {
         return bloqueService.saveBloque(bloque);
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_PRODUCCION')")
     @GetMapping("/all")
     public List<Bloque> getBloques(){
         return bloqueService.getAllBloque();

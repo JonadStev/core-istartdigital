@@ -15,13 +15,11 @@ public class BloqueServiceImpl implements BloqueService{
     @Autowired
     BloqueRepository bloqueRepository;
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
     @Override
     public Bloque saveBloque(Bloque bloque) {
         return bloqueRepository.save(bloque);
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
     @Override
     public List<Bloque> getAllBloque() {
         return (List<Bloque>) bloqueRepository.findAll();

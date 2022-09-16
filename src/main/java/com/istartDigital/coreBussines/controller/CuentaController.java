@@ -108,7 +108,7 @@ public class CuentaController {
         return cuentaService.getAllCuentas();
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_PRODUCCION')")
     @GetMapping("/{id}")
     public List<Cuenta> getCuentasByIdBloque(@PathVariable("id") long idBloque){
         return cuentaService.getCuentasByIdBloque(idBloque);

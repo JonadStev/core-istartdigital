@@ -19,19 +19,20 @@ public class BloqueoController {
     @Autowired
     BloqueoService bloqueoService;
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_PRODUCCION')")
     @PostMapping("/save")
     public Bloqueo saveBloqueo(@RequestBody BloqueoDto bloqueo){
         return bloqueoService.saveBloqueo(bloqueo);
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    //@PreAuthorize("hasRole({'ROLE_SUPERVISOR','ROLE_PRODUCCION'})")
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_PRODUCCION')")
     @GetMapping("/all")
     public List<Bloqueo> getBloqueos(){
         return bloqueoService.getBloqueos();
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+    @PreAuthorize("hasRole('ROLE_SUPERVISOR') or hasRole('ROLE_PRODUCCION')")
     @DeleteMapping("/delete/{id}")
     public Map<String, String> deleteBloque(@PathVariable("id") long id){
         Map<String, String> map = new HashMap<>();
