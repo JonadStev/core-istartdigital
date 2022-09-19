@@ -1,6 +1,7 @@
 package com.istartDigital.coreBussines.service;
 
 import com.istartDigital.coreBussines.dto.BloqueoDto;
+import com.istartDigital.coreBussines.dto.ReporteCuentasBaneadasPorFechaDto;
 import com.istartDigital.coreBussines.model.Bloqueo;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface BloqueoService {
     List<Bloqueo> getBloqueos();
 
     boolean deleteBloqueo(long id);
+
+    List<ReporteCuentasBaneadasPorFechaDto> getCuentasBaneadasByFecha(String fechaIni, String fechaFin);
 
 }

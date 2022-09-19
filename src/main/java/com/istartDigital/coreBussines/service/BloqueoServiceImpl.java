@@ -1,6 +1,7 @@
 package com.istartDigital.coreBussines.service;
 
 import com.istartDigital.coreBussines.dto.BloqueoDto;
+import com.istartDigital.coreBussines.dto.ReporteCuentasBaneadasPorFechaDto;
 import com.istartDigital.coreBussines.model.Bloqueo;
 import com.istartDigital.coreBussines.model.Cuenta;
 import com.istartDigital.coreBussines.repository.BloqueoRepository;
@@ -8,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BloqueoServiceImpl implements BloqueoService{
@@ -70,5 +70,32 @@ public class BloqueoServiceImpl implements BloqueoService{
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public List<ReporteCuentasBaneadasPorFechaDto> getCuentasBaneadasByFecha(String fechaIni, String fechaFin) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date dInicio = null;
+        Date dFinal = null;
+        try {
+            dInicio = formatter.parse(fechaIni);
+            dFinal = formatter.parse(fechaFin);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        List<Bloqueo> listaBloqueos = bloqueoRepository.findByFechaSegundaRevisionBetween(dInicio, dFinal);
+
+        List<Long> bloques = listaBloqueos.stream().map(x -> x.getBloque()).collect(Collectors.toList());
+
+        Set<Long> miSet = new HashSet<Long>(bloques);
+
+        List<ReporteCuentasBaneadasPorFechaDto> reporte = new ArrayList<>();
+
+        for(long s: miSet){
+            System.out.println(s + " " +Collections.frequency(bloques,s));
+            reporte.add(new ReporteCuentasBaneadasPorFechaDto(s,Collections.frequency(bloques,s)));
+        }
+        return reporte;
     }
 }

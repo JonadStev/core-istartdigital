@@ -1,6 +1,7 @@
 package com.istartDigital.coreBussines.controller;
 
 import com.istartDigital.coreBussines.dto.BloqueoDto;
+import com.istartDigital.coreBussines.dto.ReporteCuentasBaneadasPorFechaDto;
 import com.istartDigital.coreBussines.model.Bloqueo;
 import com.istartDigital.coreBussines.service.BloqueoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class BloqueoController {
         else
             map.put("message", "No se ha podido eliminar el bloqueo");
         return map;
+    }
+
+
+    @GetMapping("/bloqueos/fecha")
+    public List<ReporteCuentasBaneadasPorFechaDto> getBloqueosByFecha(@RequestParam(name = "fechaDesde") String fechaDesde, @RequestParam(name = "fechaHasta") String fechaHasta){
+        return bloqueoService.getCuentasBaneadasByFecha(fechaDesde,fechaHasta);
     }
 
 
